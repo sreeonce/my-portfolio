@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta property="og:image" content="https://sreelakshmigireesh-portfolio.netlify.app/docs/logo.png">
+<meta property="og:title" content="Sreelakshmi Gireesh - Portfolio">
+<meta property="og:description" content="AI Product Designer & Developer based in Auckland, NZ.">
+<title>Sreelakshmi Gireesh - Portfolio</title>
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Cdefs%3E%3ClinearGradient id='g' x1='0%25' y1='0%25' x2='100%25' y2='100%25'%3E%3Cstop offset='0%25' stop-color='%23a78bfa'/%3E%3Cstop offset='100%25' stop-color='%23f472b6'/%3E%3C/linearGradient%3E%3C/defs%3E%3Crect width='100' height='100' rx='20' fill='%230a0a0f'/%3E%3Ctext x='50' y='68' font-family='Arial Black,sans-serif' font-size='42' font-weight='900' text-anchor='middle' fill='url(%23g)'%3ESG%3C/text%3E%3C/svg%3E">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Mono:ital,wght@0,300;0,400;0,500;1,300&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300;1,9..144,600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #0a0a0f;
+    --surface: #111118;
+    --surface2: #16161f;
+    --border: rgba(255,255,255,0.07);
+    --text: #e8e8f0;
+    --muted: #6b6b80;
+    --accent: #a78bfa;
+    --accent2: #f472b6;
+    --accent3: #34d399;
+    --accent4: #60a5fa;
+    --glow: rgba(167,139,250,0.15);
+    --glow2: rgba(244,114,182,0.12);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'DM Mono', monospace;
+    font-size: 14px;
+    line-height: 1.7;
+    overflow-x: hidden;
+    cursor: none;
+  }
+
+  /* Custom cursor */
+  .cursor {
+    position: fixed;
+    width: 12px; height: 12px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.1s ease, opacity 0.2s;
+    mix-blend-mode: difference;
+  }
+  .cursor-ring {
+    position: fixed;
+    width: 36px; height: 36px;
+    border: 1.5px solid var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    z-index: 9998;
+    transition: width 0.25s cubic-bezier(.25,.46,.45,.94), height 0.25s cubic-bezier(.25,.46,.45,.94), opacity 0.3s, background 0.25s, border-color 0.25s;
+    opacity: 0.5;
+  }
+  .cursor-ring.hover-active {
+    width: 64px;
+    height: 64px;
+    background: rgba(167,139,250,0.1);
+    border-color: var(--accent);
+    opacity: 1;
+  }
+  .cursor-label {
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    font-family: 'Syne', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #0a0a0f;
+    background: var(--accent);
+    padding: 5px 12px;
+    border-radius: 100px;
+    opacity: 0;
+    transform: scale(0.8);
+    transition: opacity 0.2s, transform 0.2s;
+    white-space: nowrap;
+  }
+  .cursor-label.active {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  /* Noise overlay */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* Ambient light blobs */
+  .ambient {
+    position: fixed;
+    border-radius: 50%;
+    filter: blur(120px);
+    pointer-events: none;
+    z-index: 0;
+    animation: drift 20s ease-in-out infinite alternate;
+  }
+  .ambient-1 { width: 600px; height: 600px; background: var(--glow); top: -200px; left: -200px; }
+  .ambient-2 { width: 500px; height: 500px; background: var(--glow2); bottom: -100px; right: -100px; animation-delay: -10s; }
+  .ambient-3 { width: 300px; height: 300px; background: rgba(52,211,153,0.06); top: 50%; left: 50%; animation-delay: -5s; }
+
+  @keyframes drift {
+    from { transform: translate(0, 0) scale(1); }
+    to { transform: translate(40px, 30px) scale(1.1); }
+  }
+
+  /* Navigation */
+  nav {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 100;
+    padding: 20px 48px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    backdrop-filter: blur(20px);
+    border-bottom: 1px solid var(--border);
+    background: rgba(10,10,15,0.7);
+  }
+
+  .nav-logo {
+    font-family: 'Syne', sans-serif;
+    font-weight: 800;
+    font-size: 18px;
+    letter-spacing: -0.5px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .nav-links {
+    display: flex;
+    gap: 32px;
+    list-style: none;
+  }
+
+  .nav-links a {
+    color: var(--muted);
+    text-decoration: none;
+    font-size: 12px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    transition: color 0.2s;
+    position: relative;
+  }
+
+  .nav-links a::after {
+    content: '';
+    position: absolute;
+    bottom: -4px; left: 0; right: 0;
+    height: 1px;
+    background: var(--accent);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.3s ease;
+  }
+
+  .nav-links a:hover { color: var(--text); }
+  .nav-links a:hover::after { transform: scaleX(1); }
+
+  /* Main layout */
+  main { position: relative; z-index: 1; }
+
+  section { padding: 120px 48px; max-width: 1200px; margin: 0 auto; }
+
+  /* Hero */
+  .hero {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding-top: 100px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-left: 48px;
+    padding-right: 48px;
+  }
+
+  .hero-eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 24px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.2s;
+  }
+
+  .hero-eyebrow::before {
+    content: '';
+    display: block;
+    width: 32px;
+    height: 1px;
+    background: var(--accent);
+  }
+
+  .hero-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(24px, 2.8vw, 34px);
+    font-weight: 400;
+    line-height: 1.1;
+    letter-spacing: -0.5px;
+    color: var(--muted);
+    margin-bottom: 28px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.4s;
+  }
+
+  .hero-title em {
+    font-style: italic;
+    color: var(--text);
+  }
+
+  .hero-tagline {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(30px, 4.4vw, 52px);
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.35;
+    letter-spacing: -0.3px;
+    margin-bottom: 44px;
+    max-width: 700px;
+    background: linear-gradient(135deg, var(--accent), var(--accent2));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.55s;
+  }
+
+  .hero-sub {
+    max-width: 560px;
+    color: rgba(232,232,240,0.7);
+    font-family: 'Syne', sans-serif;
+    font-weight: 400;
+    font-size: 16px;
+    line-height: 1.9;
+    letter-spacing: 0.01em;
+    margin-bottom: 52px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.75s;
+  }
+
+  .hero-tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    opacity: 0;
+    animation: fadeUp 0.8s ease forwards 0.85s;
+  }
+
+  .tag {
+    padding: 6px 16px;
+    border: 1px solid var(--border);
+    border-radius: 100px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--muted);
+    background: var(--surface);
+    transition: all 0.2s;
+  }
+
+  .tag:hover {
+    border-color: var(--accent);
+    color: var(--accent);
+    background: rgba(167,139,250,0.08);
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 48px;
+    left: 48px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--muted);
+    font-size: 11px;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    animation: fadeUp 0.8s ease forwards 1.2s;
+    opacity: 0;
+  }
+
+  .scroll-line {
+    width: 60px;
+    height: 1px;
+    background: linear-gradient(90deg, var(--accent), transparent);
+    animation: scrollPulse 2s ease infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.4; transform: scaleX(1); }
+    50% { opacity: 1; transform: scaleX(1.2); transform-origin: left; }
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Section headers */
+  .section-header {
+    display: flex;
+    align-items: baseline;
+    gap: 20px;
+    margin-bottom: 64px;
+  }
+
+  .section-num {
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    color: var(--accent);
+    text-transform: uppercase;
+  }
+
+  .section-title {
+    font-family: 'Fraunces', serif;
+    font-size: clamp(36px, 5vw, 56px);
+    font-weight: 300;
+    letter-spacing: -1.5px;
+    line-height: 1;
+  }
+
+  .section-line {
+    flex: 1;
+    height: 1px;
+    background: linear-gradient(90deg, var(--border), transparent);
+    margin-left: 20px;
+  }
+
+  /* ── CURRENTLY WORKING ── */
+  .current-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 20px;
+    padding: 48px;
+    position: relative;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    gap: 48px;
+    align-items: start;
+  }
+
+  .current-card::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(167,139,250,0.05), rgba(244,114,182,0.05));
+    opacity: 0;
+    transition: opacity 0.3s;
+  }
+
+  .current-card:hover { border-color: rgba(167,139,250,0.3); transform: translateY(-4px); }
+  .current-card:hover::before { opacity: 1; }
+
+  .live-badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 14px;
+    background: rgba(52,211,153,0.1);
+    border: 1px solid rgba(52,211,153,0.3);
+    border-radius: 100px;
+    font-size: 11px;
+    color: var(--accent3);
+    letter-spacing: 0.08em;
+    margin-bottom: 20px;
+  }
+
+  .live-dot {
+    width: 6px; height: 6px;
+    background: var(--accent3);
+    border-radius: 50%;
+    animation: pulse 1.5s ease infinite;
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(0.8); }
+  }
+
+  .current-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin-bottom: 12px;
+  }
+
+  .current-desc {
+    color: var(--muted);
+    line-height: 1.8;
+    max-width: 560px;
+    margin-bottom: 28px;
+    font-size: 13px;
+  }
+
+  .tech-stack {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  .tech-pill {
+    padding: 4px 12px;
+    background: var(--surface2);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    font-size: 11px;
+    color: var(--muted);
+    letter-spacing: 0.05em;
+  }
+
+  .current-visual {
+    width: 200px;
+    height: 200px;
+    border-radius: 16px;
+    background: linear-gradient(135deg, rgba(167,139,250,0.2), rgba(244,114,182,0.2));
+    border: 1px solid rgba(167,139,250,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 64px;
+    flex-shrink: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .current-visual::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 30% 30%, rgba(255,255,255,0.08), transparent 60%);
+  }
+
+  /* ── COLLEGE PROJECTS ── */
+  .projects-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+
+  .project-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+
+  .project-card:hover { border-color: rgba(96,165,250,0.4); transform: translateY(-6px); }
+
+  /* Clickable cards: entire card is a link (personal/college/figma) — subtle "press in" hover instead of lift */
+  a.project-card.clickable-card,
+  a.figma-card.clickable-card {
+    display: block;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  .project-card.clickable-card:hover,
+  .figma-card.clickable-card:hover {
+    transform: scale(1.03);
+    border-color: rgba(167,139,250,0.4);
+  }
+
+  .project-hero {
+    height: 220px;
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 72px;
+    overflow: hidden;
+  }
+
+  .project-hero-physio {
+    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  }
+
+  .project-hero-sales {
+    background: linear-gradient(135deg, #1a0533, #2d0052, #3d0070);
+  }
+
+  .project-hero img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+  .project-hero::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(circle at 50% 50%, rgba(255,255,255,0.05), transparent 70%);
+  }
+
+  .project-body { padding: 28px; }
+
+  .project-type {
+    font-size: 10px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--accent4);
+    margin-bottom: 10px;
+  }
+
+  .project-title {
+    font-family: 'Syne', sans-serif;
+    font-size: 22px;
+    font-weight: 700;
+    letter-spacing: -0.3px;
+    margin-bottom: 10px;
+  }
+
+  .project-desc {
+    color: var(--muted);
+    font-size: 12px;
+    line-height: 1.7;
+  }
+
+  /* ── FIGMA DESIGNS ── */
+  .figma-intro {
+    color: var(--muted);
+    font-size: 13px;
+    line-height: 1.7;
+    margin-bottom: 48px;
+    max-width: 600px;
+  }
+
+  .figma-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+    margin-bottom: 32px;
+  }
+
+  .figma-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 16px;
+    overflow: hidden;
+    cursor: none;
+    transition: border-color 0.3s, transform 0.3s;
+    position: relative;
+  }
+
+  .figma-thumb {
+    height: 160px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 48px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .figma-body { padding: 18px 20px; }
+
+  .figma-name {
+    font-family: 'Syne', sans-serif;
+    font-size: 14px;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  .figma-tag {
+    font-size: 11px;
+    color: var(--muted);
+  }
+
+  /* Color presets for figma thumbnails */
+  .grad-1 { background: linear-gradient(135deg, #667eea, #764ba2); }
+  .grad-2 { background: linear-gradient(135deg, #f093fb, #f5576c); }
+  .grad-3 { background: linear-gradient(135deg, #4facfe, #00f2fe); }
+  .grad-4 { background: linear-gradient(135deg, #43e97b, #38f9d7); }
+  .grad-5 { background: linear-gradient(135deg, #fa709a, #fee140); }
+  .grad-6 { background: linear-gradient(135deg, #a18cd1, #fbc2eb); }
+  .grad-7 { background: linear-gradient(135deg, #ffecd2, #fcb69f); }
+  .grad-8 { background: linear-gradient(135deg, #2af598, #009efd); }
+  .grad-9 { background: linear-gradient(135deg, #ff9a9e, #fad0c4); }
+  .grad-10 { background: linear-gradient(135deg, #a1c4fd, #c2e9fb); }
+
+  /* Footer */
+  footer {
+    border-top: 1px solid var(--border);
+    padding: 48px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    color: var(--muted);
+    font-size: 12px;
+    position: relative;
+    z-index: 1;
+  }
+
+  .footer-name {
+    font-family: 'Fraunces', serif;
+    font-size: 20px;
+    font-weight: 300;
+    color: var(--text);
+    letter-spacing: -0.5px;
+  }
+
+  .footer-links {
+    display: flex;
+    gap: 24px;
+  }
+
+  .footer-links a {
+    color: var(--muted);
+    text-decoration: none;
+    transition: color 0.2s;
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+  }
+  .footer-links a:hover { color: var(--accent); }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0;
+    transform: translateY(40px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .nav-links { display: none; }
+    .cursor, .cursor-ring, .cursor-label { display: none; }
+    body { cursor: auto; }
+    section, .hero { padding-left: 24px; padding-right: 24px; }
+    .hero-tagline { font-size: 34px; }
+    .current-card { grid-template-columns: 1fr; }
+    .current-visual { display: none; }
+    .projects-grid { grid-template-columns: 1fr; }
+    .figma-grid { grid-template-columns: 1fr; }
+    footer { flex-direction: column; gap: 24px; text-align: center; }
+    .hero-scroll { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- Cursor -->
+<div class="cursor" id="cursor"></div>
+<div class="cursor-ring" id="cursorRing"></div>
+<div class="cursor-label" id="cursorLabel">View</div>
+
+<!-- Ambient -->
+<div class="ambient ambient-1"></div>
+<div class="ambient ambient-2"></div>
+<div class="ambient ambient-3"></div>
+
+<!-- Nav -->
+<nav>
+  <div class="nav-logo">SG</div>
+  <ul class="nav-links">
+    <li><a href="#current">WIP</a></li>
+    <li><a href="#personal">Personal Projects</a></li>
+    <li><a href="#college">Team Projects</a></li>
+    <li><a href="#figma">Figma Designs</a></li>
+    <li><a href="#footer">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- Hero -->
+<div class="hero" style="position:relative;">
+  <div class="hero-eyebrow">AI Product Designer & Developer</div>
+  <h1 class="hero-title">Sreelakshmi <em>Gireesh</em></h1>
+  <div class="hero-tagline">I design the interface, then I build what's underneath it.</div>
+  <p class="hero-sub">
+    Building intelligent web and mobile applications that blend AI, design, and functionality - focused on creating scalable, real-world digital experiences.
+  </p>
+  <div class="hero-tags">
+    <span class="tag">UI/UX Design</span>
+    <span class="tag">Web Development</span>
+    <span class="tag">Figma</span>
+    <span class="tag">React Native</span>
+    <span class="tag">Machine Learning</span>
+    <span class="tag">Artificial Intelligence</span>
+  </div>
+  
+</div>
+
+<!-- Work in Progress -->
+<section id="current">
+  <div class="section-header reveal">
+    <span class="section-num">01</span>
+    <h2 class="section-title">Work in Progress</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="current-card reveal reveal-delay-1" id="tootmate-card">
+    <div>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        In Progress
+      </div>
+      <div class="current-title">Job Ready</div>
+      <p class="current-desc" id="tootmate-desc">
+        An AI-powered resume optimization platform that simplifies the job application process by helping candidates tailor their resumes to specific roles. Through intelligent analysis of job descriptions and candidate profiles, the platform delivers targeted recommendations, keyword optimization, and ATS-focused improvements, enabling users to showcase their skills more effectively and improve their competitiveness in the job market.
+      </p>
+      <div class="tech-stack" id="tootmate-stack">
+        <span class="tech-pill">Full Stack Development</span>
+        <span class="tech-pill">React</span>
+        <span class="tech-pill">Artificial Intelligence</span>
+      </div>
+    </div>
+    <div class="current-visual"><img src="docs/resume-website-mock-img.png" style="width:100%; height:100%; object-fit:contain; border-radius:12px;"></div>
+  </div>
+  <br>
+  <div class="current-card reveal reveal-delay-1" id="together-card">
+    <div>
+      <div class="live-badge">
+        <div class="live-dot"></div>
+        In Progress
+      </div>
+      <div class="current-title">Together</div>
+      <p class="current-desc" id="together-desc">
+        A real-time companion website designed for long-distance couples and friends, enabling synchronized experiences across distance. Features include live video calling, synced movie watching with shared playback controls, multiplayer games, and an intimate space for sharing notes and moods — all within a private shared room, making the distance feel a little smaller.
+      </p>
+      <div class="tech-stack" id="together-stack">
+        <span class="tech-pill">WebSockets</span>
+        <span class="tech-pill">Jitsi Meet API</span>
+        <span class="tech-pill">HTML5 Video Sync</span>
+      </div>
+    </div>
+    <div class="current-visual"><img src="docs/together-img.png" style="width:100%; height:100%; object-fit:contain; border-radius:12px;"></div>
+  </div>
+</section>
+
+<!-- Personal Projects -->
+<section id="personal">
+  <div class="section-header reveal">
+    <span class="section-num">02</span>
+    <h2 class="section-title">Personal Projects</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+    <!-- TooTMate -->
+    <a href="pages/tootmate.html" class="project-card clickable-card reveal reveal-delay-1">
+      <div class="project-hero project-hero-physio"><img src="docs/tootmate-app-img.png"></div>
+      <div class="project-body">
+        <div class="project-type">React Native · Expo Go · Mobile</div>
+        <div class="project-title">TooTMate</div>
+        <p class="project-desc">
+          A gamified study companion that transforms the academic "grind" into an interactive Role-Playing Game (RPG). By turning study sessions into quests and tasks into XP-earning opportunities, the app reframes productivity as an enjoyable, rewarding experience rather than a chore.
+        </p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- College Projects -->
+<section id="college">
+  <div class="section-header reveal">
+    <span class="section-num">03</span>
+    <h2 class="section-title">Team Projects</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <div class="projects-grid">
+    <!-- PhysioPlay -->
+    <a href="pages/physioplay.html" class="project-card clickable-card reveal reveal-delay-1">
+      <div class="project-hero project-hero-physio"><img src="docs/physioplay-img.png"></div>
+      <div class="project-body">
+        <div class="project-type">Health Tech · ML · Mobile</div>
+        <div class="project-title">PhysioPlay</div>
+        <p class="project-desc">
+          A physiotherapy gamification mobile app designed for children with autism and cerebral palsy. Built with a focus on patient adherence by implementing pose detection.
+        </p>
+      </div>
+    </a>
+
+    <!-- Restaurant Sales -->
+    <a href="pages/restaurant-sales.html" class="project-card clickable-card reveal reveal-delay-2">
+      <div class="project-hero project-hero-sales"><img src="docs/sales-img.png"></div>
+      <div class="project-body">
+        <div class="project-type">Data Analysis · ML · Python</div>
+        <div class="project-title">Restaurant Sales Analysis</div>
+        <p class="project-desc">
+          A data analysis project exploring sales patterns, customer behaviour, and revenue trends for a restaurant dataset. Includes visualisations and predictive modelling.
+        </p>
+      </div>
+    </a>
+
+    <!-- TaskFlow AI -->
+    <a href="pages/taskflow.html" class="project-card clickable-card reveal reveal-delay-1">
+      <div class="project-hero project-hero-physio"><img src="docs/taskflow-img.png"></div>
+      <div class="project-body">
+        <div class="project-type">AI · Full-Stack · Web</div>
+        <div class="project-title">TaskFlow AI</div>
+        <p class="project-desc">
+          An AI-powered scheduling assistant that bridges the gap between long-term goals and daily action. Features include intelligent schedule generation, goal-to-task decomposition, dynamic re-planning, and a gamified Productivity Ocean - all designed to reduce decision fatigue and help you actually execute on what matters most.
+        </p>
+      </div>
+    </a>
+  </div>
+</section>
+
+<!-- Figma Designs -->
+<section id="figma">
+  <div class="section-header reveal">
+    <span class="section-num">04</span>
+    <h2 class="section-title">Figma Designs</h2>
+    <div class="section-line"></div>
+  </div>
+
+  <p class="figma-intro reveal">
+    A collection of UI/UX designs spanning mobile apps, web interfaces, dashboards, and design system components. Click on any card to view the design.
+  </p>
+
+  <div class="figma-grid" id="figma-grid">
+    <!-- Designs will render here from JS -->
+  </div>
+</section>
+
+<!-- Footer -->
+<footer id="footer">
+  <div>
+    <div class="footer-name">Sreelakshmi Gireesh</div>
+    <div style="color:var(--muted); font-size:11px; margin-top:4px;">Auckland, New Zealand</div>
+  </div>
+  <div class="footer-links">
+    <a href="mailto:sreelakshmigireesh16@gmail.com">Email</a>
+    <a href="https://linkedin.com/in/sreelakshmi-gireesh/" target="_blank">LinkedIn</a>
+    <a href="https://github.com/sreeonce" target="_blank">GitHub</a>
+  </div>
+</footer>
+
+<script>
+// ── Figma Designs ──
+const defaultFigmaDesigns = [
+  { name: 'Job Portal', cat: 'Mobile App', img: 'docs/jobportal-img.png', grad: 4, url: 'pages/job-portal.html', desc: 'A dual-sided recruitment platform bridging employers and job seekers through intuitive job discovery, real-time notifications, and integrated chat.' },
+{ name: 'Chef Stories', cat: 'Mobile App', img: 'docs/recipe-img.png', grad: 4, url: 'pages/chef-stories.html', desc: 'A culinary companion app for food enthusiasts to discover, save, and follow step-by-step recipes from a curated collection of dishes.' },
+{ name: 'X', cat: 'Mobile App', img: 'docs/x-img.png', grad: 4, url: 'pages/x.html', desc: 'A conceptual redesign of X (formerly Twitter), reimagining the social experience with a cleaner layout and improved visual hierarchy.' },
+{ name: 'Harmoni', cat: 'Web App', img: 'docs/harmoni-img.png', grad: 4, url: 'pages/harmoni.html', desc: 'A workplace wellness platform designed to support mental health through mindfulness tools, mood tracking, and team wellbeing insights.' },
+{ name: 'Food Delivery App', cat: 'Mobile App', img: 'docs/food_delivery-img.png', grad: 4, url: 'pages/food-delivery.html', desc: 'A streamlined food ordering experience featuring smart restaurant discovery, diverse cuisine browsing, and a frictionless end-to-end checkout flow.' },
+{ name: 'ResumeVise', cat: 'Web App', img: 'docs/resumevise-img.png', grad: 4, url: 'pages/resumevise.html', desc: 'An AI-powered resume builder tailored for students, generating role-specific, professionally structured CVs with minimal effort.' },
+];
+
+function renderFigmaGrid() {
+  const designs = defaultFigmaDesigns;
+  const grid = document.getElementById('figma-grid');
+  grid.innerHTML = designs.map((d, i) => `
+    <a href="${d.url}" class="project-card figma-card clickable-card reveal reveal-delay-${(i % 2) + 1}">
+      <div class="project-hero" style="background:#111118;">
+        <img src="${d.img}" style="width:100%;height:100%;object-fit:cover;">
+      </div>
+      <div class="project-body">
+        <div class="project-type">Figma · ${d.cat}</div>
+        <div class="project-title">${d.name}</div>
+        <p class="project-desc">${d.desc || 'A UI/UX design project.'}</p>
+      </div>
+    </a>
+  `).join('');
+  observeReveal();
+  bindClickableCursor();
+}
+
+// ── Cursor ──
+const cursor = document.getElementById('cursor');
+const cursorRing = document.getElementById('cursorRing');
+const cursorLabel = document.getElementById('cursorLabel');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.transform = `translate(${mx - 6}px, ${my - 6}px)`;
+  cursorLabel.style.transform = `translate(${mx + 18}px, ${my + 18}px) scale(${cursorLabel.classList.contains('active') ? 1 : 0.8})`;
+});
+
+function animRing() {
+  rx += (mx - rx) * 0.12;
+  ry += (my - ry) * 0.12;
+  const size = cursorRing.classList.contains('hover-active') ? 64 : 36;
+  cursorRing.style.transform = `translate(${rx - size / 2}px, ${ry - size / 2}px)`;
+  requestAnimationFrame(animRing);
+}
+animRing();
+
+function bindClickableCursor() {
+  document.querySelectorAll('a, button').forEach(el => {
+    el.addEventListener('mouseenter', () => { cursorRing.style.opacity = '1'; });
+    el.addEventListener('mouseleave', () => { cursorRing.style.opacity = '0.5'; });
+  });
+  document.querySelectorAll('.clickable-card').forEach(el => {
+    el.addEventListener('mouseenter', () => {
+      cursorRing.classList.add('hover-active');
+      cursorLabel.classList.add('active');
+      cursorLabel.textContent = el.closest('#figma') ? 'View Design' : 'View Project';
+    });
+    el.addEventListener('mouseleave', () => {
+      cursorRing.classList.remove('hover-active');
+      cursorLabel.classList.remove('active');
+    });
+  });
+}
+
+// ── Scroll Reveal ──
+function observeReveal() {
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.1 });
+  document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+}
+
+// ── Init ──
+observeReveal();
+bindClickableCursor();
+renderFigmaGrid();
+</script>
+</body>
+</html>
